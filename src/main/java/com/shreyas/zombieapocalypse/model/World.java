@@ -36,14 +36,18 @@ public class World {
     }
 
     public Optional<Creature> moveZombie(Direction direction){
-        Position newZombiePosition = zombie.getCurrentPosition().move(direction, dimensions);
+        Position newZombiePosition = direction.move(zombie.getCurrentPosition(), dimensions);
         Creature creature = positions.get(newZombiePosition);
         zombie.setCurrentPosition(newZombiePosition);
         if(null != creature && !creature.isZombie()) {
-            creature.setZombie(true);
-            positions.put(newZombiePosition, creature);
-            return Optional.of(creature);
+            return zombieBitesCreature(newZombiePosition, creature);
         }
         return Optional.empty();
+    }
+
+    private Optional<Creature> zombieBitesCreature(Position newZombiePosition, Creature creature) {
+        Creature zombieCreature = zombie.bites(creature);
+        positions.put(newZombiePosition, zombieCreature);
+        return Optional.of(zombieCreature);
     }
 }
