@@ -1,6 +1,7 @@
 package com.shreyas.zombieapocalypse.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +14,15 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Value("${user.name}")
+    private String userName;
+
+    @Value("${user.role}")
+    private String userRole;
+
+    @Value("${user.password}")
+    private String userHashedPassword;
 
     @Autowired
     private AuthenticationEntryPoint authenticationEntryPoint;
@@ -27,9 +37,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("ailo")
-                .password("$2a$04$AjFEmZeX7mN8zSn57PUEZeJgBeoKMvwteZMBiP57Jb4AGFsUORmLC")
-                .roles("USER");
+        auth.inMemoryAuthentication().withUser(userName)
+                .password(userHashedPassword)
+                .roles(userRole);
     }
 
     @Bean
