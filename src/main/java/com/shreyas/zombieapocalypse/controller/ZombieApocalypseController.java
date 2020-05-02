@@ -1,23 +1,41 @@
 package com.shreyas.zombieapocalypse.controller;
 
-import com.shreyas.zombieapocalypse.exception.InvalidInputException;
 import com.shreyas.zombieapocalypse.model.InputRequest;
 import com.shreyas.zombieapocalypse.model.OutputResponse;
 import com.shreyas.zombieapocalypse.service.ZombieMovementService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class ZombieApocalypseController {
 
 
-    public ZombieApocalypseController() {
+    @Autowired
+    private ZombieMovementService zombieMovementService;
+
+    @PostMapping("/apocalypse")
+    public OutputResponse apocalypse(@Valid @RequestBody InputRequest inputRequest){
+        zombieMovementService.init(inputRequest);
+        return zombieMovementService.move();
     }
 
-    @PostMapping("/attack")
-    public OutputResponse attack(@RequestBody InputRequest inputRequest) throws InvalidInputException {
-        return new ZombieMovementService(inputRequest).move();
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 }

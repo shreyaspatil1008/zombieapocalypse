@@ -31,9 +31,9 @@ public class SpringFoxConfig {
                 .description("Swagger setup in spring")
                 .license("Apache 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0.html")
-                .termsOfServiceUrl("https://shreyas/tems")
+                .termsOfServiceUrl("https://shreyaspatil1008/terms")
                 .version("1.0.0")
-                .contact(new Contact("Shreyas","https://github.com/shreyas", "shreyas@gmail.com"))
+                .contact(new Contact("Shreyas","https://github.com/shreyaspatil1008", "shreyaspatil1008@gmail.com"))
                 .build();
     }
 }

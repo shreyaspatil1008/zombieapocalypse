@@ -1,11 +1,14 @@
 package com.shreyas.zombieapocalypse.service;
 
 import com.shreyas.zombieapocalypse.enums.Direction;
-import com.shreyas.zombieapocalypse.exception.InvalidInputException;
+import com.shreyas.zombieapocalypse.factory.PositionFactory;
 import com.shreyas.zombieapocalypse.model.*;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+@Service
 public class ZombieMovementService {
 
     private World world;
@@ -18,10 +21,10 @@ public class ZombieMovementService {
 
     private int zombieScore;
 
-    public ZombieMovementService(InputRequest inputRequest) {
+    public void init(InputRequest inputRequest) {
         world = new World(
                 inputRequest.getDimension(),
-                new Creature(new Position(2, 1), true),
+                new Creature(PositionFactory.createPosition(inputRequest.getZombiePosition()), true),
                 List.of(
                         new Creature(new Position(0, 1), false),
                         new Creature(new Position(1, 2), false),
@@ -41,7 +44,7 @@ public class ZombieMovementService {
         zombiePositions = new LinkedList<>();
     }
 
-    public OutputResponse move() throws InvalidInputException {
+    public OutputResponse move(){
         zombies.add(world.getZombie());
         while (!zombies.isEmpty()) {
             world.setZombie(zombies.poll());
@@ -56,20 +59,14 @@ public class ZombieMovementService {
             }
             zombiePositions.add(world.getZombie().getCurrentPosition());
         }
-
-        //System.out.println("Positions: ");
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Position pos : zombiePositions) {
-            //System.out.println("(" + pos.getXCoordinate() + "," + pos.getYCoordinate() + ") \n");
-            stringBuilder.append("(" + pos.getXCoordinate() + "," + pos.getYCoordinate() + ") ");
-        }
-        //System.out.println("zombieScore: " + zombieScore);
+        String stringBuilder = zombiePositions.stream().map(
+                pos -> "(" + pos.getXCoordinate() + "," + pos.getYCoordinate() + ") "
+        ).collect(Collectors.joining());
 
         return OutputResponse
                 .builder()
                 .zombieScore(zombieScore)
-                .zombiePosition(stringBuilder.toString())
+                .zombiePosition(stringBuilder)
                 .build();
     }
 }

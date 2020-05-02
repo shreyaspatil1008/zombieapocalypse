@@ -1,18 +1,16 @@
 package com.shreyas.zombieapocalypse.model;
 
 import com.shreyas.zombieapocalypse.enums.Direction;
-import com.shreyas.zombieapocalypse.exception.InvalidInputException;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 public class World {
 
     private Integer dimensions;
@@ -28,7 +26,6 @@ public class World {
         this.positions = new LinkedHashMap<>();
         this.zombie = zombie;
         this.creatures = creatures;
-        initPositions();
         keepCreaturesOnTheirPositions();
     }
 
@@ -38,17 +35,7 @@ public class World {
         }
     }
 
-    private void initPositions() {
-        for (int xDimension = 0; xDimension < dimensions ; xDimension ++) {
-            for (int yDimension = 0; yDimension < dimensions ; yDimension ++) {
-                Position position = new Position(xDimension, yDimension);
-                positions.put(position, null);
-            }
-        }
-    }
-
-
-    public Optional<Creature> moveZombie(Direction direction) throws InvalidInputException {
+    public Optional<Creature> moveZombie(Direction direction){
         Position newZombiePosition = zombie.getCurrentPosition().move(direction, dimensions);
         Creature creature = positions.get(newZombiePosition);
         zombie.setCurrentPosition(newZombiePosition);

@@ -1,7 +1,6 @@
 package com.shreyas.zombieapocalypse.model;
 
 import com.shreyas.zombieapocalypse.enums.Direction;
-import com.shreyas.zombieapocalypse.exception.InvalidInputException;
 import lombok.*;
 
 @AllArgsConstructor
@@ -33,7 +32,7 @@ public class Position {
         return new Position(newXCoordinate, yCoordinate);
     }
 
-    public Position move(Direction direction, Integer dimensions) throws InvalidInputException {
+    public Position move(Direction direction, Integer dimensions){
         switch (direction){
             case UP:
                 return moveUp(dimensions);
@@ -43,8 +42,7 @@ public class Position {
                 return moveLeft(dimensions);
             case RIGHT:
                 return moveRight(dimensions);
-            default:
-                throw new InvalidInputException("No direction available with value: " + direction);
         }
+        return null;
     }
 }
