@@ -19,6 +19,6 @@ public class RestResponseEntityExceptionHandler
         logger.error(ex);
         String bodyOfResponse = "This is an application error, please contact system administrator";
         return handleExceptionInternal(ex, bodyOfResponse,
-                new HttpHeaders(), HttpStatus.CONFLICT, request);
+                new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }
