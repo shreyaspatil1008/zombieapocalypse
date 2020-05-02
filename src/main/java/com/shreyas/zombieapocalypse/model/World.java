@@ -13,7 +13,7 @@ import java.util.Optional;
 @Setter
 public class World {
 
-    private Integer dimensions;
+    private Integer dimension;
 
     private Map<Position,Creature> positions;
 
@@ -21,8 +21,8 @@ public class World {
 
     private List<Creature> creatures;
 
-    public World(Integer dimensions, Creature zombie, List<Creature> creatures) {
-        this.dimensions = dimensions;
+    public World(Integer dimension, Creature zombie, List<Creature> creatures) {
+        this.dimension = dimension;
         this.positions = new LinkedHashMap<>();
         this.zombie = zombie;
         this.creatures = creatures;
@@ -36,7 +36,7 @@ public class World {
     }
 
     public Optional<Creature> moveZombie(Direction direction){
-        Position newZombiePosition = direction.move(zombie.getCurrentPosition(), dimensions);
+        Position newZombiePosition = direction.move(zombie.getCurrentPosition(), dimension);
         Creature creature = positions.get(newZombiePosition);
         zombie.setCurrentPosition(newZombiePosition);
         if(null != creature && !creature.isZombie()) {
