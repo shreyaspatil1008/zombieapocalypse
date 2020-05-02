@@ -2,10 +2,18 @@ package com.shreyas.zombieapocalypse.service;
 
 import com.shreyas.zombieapocalypse.enums.Direction;
 import com.shreyas.zombieapocalypse.factory.PositionFactory;
-import com.shreyas.zombieapocalypse.model.*;
+import com.shreyas.zombieapocalypse.model.Creature;
+import com.shreyas.zombieapocalypse.model.InputRequest;
+import com.shreyas.zombieapocalypse.model.OutputResponse;
+import com.shreyas.zombieapocalypse.model.Position;
+import com.shreyas.zombieapocalypse.model.World;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 @Service
