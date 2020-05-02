@@ -1,10 +1,10 @@
 package com.shreyas.zombieapocalypse.enums;
 
 public enum Direction {
-    LEFT("L"),
-    RIGHT("R"),
-    UP("U"),
-    DOWN("D");
+    L("L"),
+    R("R"),
+    U("U"),
+    D("D");
 
     private String movement;
 

@@ -42,7 +42,6 @@ public class World {
         if(null != creature && !creature.isZombie()) {
             creature.setZombie(true);
             positions.put(newZombiePosition, creature);
-            System.out.println("creature: "+ creature);
             return Optional.of(creature);
         }
         return Optional.empty();

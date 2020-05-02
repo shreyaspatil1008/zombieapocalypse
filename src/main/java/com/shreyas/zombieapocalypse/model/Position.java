@@ -34,13 +34,13 @@ public class Position {
 
     public Position move(Direction direction, Integer dimensions){
         switch (direction){
-            case UP:
+            case U:
                 return moveUp(dimensions);
-            case DOWN:
+            case D:
                 return moveDown(dimensions);
-            case LEFT:
+            case L:
                 return moveLeft(dimensions);
-            case RIGHT:
+            case R:
                 return moveRight(dimensions);
         }
         return null;

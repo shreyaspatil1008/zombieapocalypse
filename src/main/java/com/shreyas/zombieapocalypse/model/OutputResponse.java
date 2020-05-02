@@ -14,6 +14,7 @@ public class OutputResponse {
 
     @ApiModelProperty(position = 1, notes = "zombie score", example = "3", required = true)
     private Integer zombieScore;
+
     @ApiModelProperty(position = 2, notes = "zombie positions", example = "(3,0) (2,1) (1,0) (0,0)", required = true)
     private String zombiePosition;
 }

@@ -22,51 +22,78 @@ public class ZombieMovementService {
     private int zombieScore;
 
     public void init(InputRequest inputRequest) {
-        world = new World(
-                inputRequest.getDimension(),
-                new Creature(PositionFactory.createPosition(inputRequest.getZombiePosition()), true),
-                List.of(
-                        new Creature(new Position(0, 1), false),
-                        new Creature(new Position(1, 2), false),
-                        new Creature(new Position(3, 1), false)
-                )
-        );
-
-        directions = new ArrayList<>();
-        directions.add(Direction.DOWN);
-        directions.add(Direction.LEFT);
-        directions.add(Direction.UP);
-        directions.add(Direction.UP);
-        directions.add(Direction.RIGHT);
-        directions.add(Direction.RIGHT);
-
+        world = createWorld(inputRequest);
+        directions = createDirections(inputRequest.getMovements());
         zombies = new LinkedList<>();
         zombiePositions = new LinkedList<>();
+    }
+
+    private List<Direction> createDirections(String movements) {
+        return movements.chars()
+                .mapToObj(c -> Direction.valueOf(String.valueOf((char) c)))
+                .collect(Collectors.toList());
+    }
+
+    private World createWorld(InputRequest inputRequest) {
+        return new World(
+                inputRequest.getDimension(),
+                createZombie(inputRequest.getZombiePosition(), true),
+                createCreatures(inputRequest.getCreaturePosition())
+        );
+    }
+
+    private Creature createZombie(String zombiePosition, boolean b) {
+        return new Creature(PositionFactory.createPosition(zombiePosition), b);
+    }
+
+    private List<Creature> createCreatures(String creaturePosition) {
+        creaturePosition = creaturePosition.trim().replaceAll("\\)","\\):");
+        String[] positions = creaturePosition.split(":");
+        List<Creature> creatures = new ArrayList<>();
+        for (String position: positions) {
+            creatures.add(createZombie(position, false));
+        }
+        return creatures;
     }
 
     public OutputResponse move(){
         zombies.add(world.getZombie());
         while (!zombies.isEmpty()) {
-            world.setZombie(zombies.poll());
-            for (Direction direction : directions) {
-                Optional<Creature> affectedCreature = world.moveZombie(direction);
-                affectedCreature.ifPresent(
-                        creature -> {
-                            zombies.add(creature);
-                            zombieScore++;
-                        }
-                );
-            }
-            zombiePositions.add(world.getZombie().getCurrentPosition());
+            retrieveFirstZombieFromQueue();
+            moveZombieOnDirections();
+            persistZombiesFinalPosition();
         }
-        String stringBuilder = zombiePositions.stream().map(
-                pos -> "(" + pos.getXCoordinate() + "," + pos.getYCoordinate() + ") "
-        ).collect(Collectors.joining());
+        return buildOutputResponse();
+    }
 
+    private void retrieveFirstZombieFromQueue() {
+        world.setZombie(zombies.poll());
+    }
+
+    private void persistZombiesFinalPosition() {
+        zombiePositions.add(world.getZombie().getCurrentPosition());
+    }
+
+    private void moveZombieOnDirections() {
+        for (Direction direction : directions) {
+            Optional<Creature> affectedCreature = world.moveZombie(direction);
+            affectedCreature.ifPresent(
+                    creature -> {
+                        zombies.add(creature);
+                        zombieScore++;
+                    }
+            );
+        }
+    }
+
+    private OutputResponse buildOutputResponse() {
         return OutputResponse
                 .builder()
                 .zombieScore(zombieScore)
-                .zombiePosition(stringBuilder)
+                .zombiePosition(zombiePositions
+                        .stream()
+                        .map(pos -> "(" + pos.getXCoordinate() + "," + pos.getYCoordinate() + ") ")
+                        .collect(Collectors.joining()))
                 .build();
     }
 }
