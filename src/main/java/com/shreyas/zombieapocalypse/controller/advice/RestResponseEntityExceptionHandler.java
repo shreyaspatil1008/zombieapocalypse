@@ -16,7 +16,6 @@ public class RestResponseEntityExceptionHandler
     protected ResponseEntity<Object> handleConflict(
             RuntimeException ex, WebRequest request) {
 
-        logger.error(ex.getCause());
         logger.error(ex);
         String bodyOfResponse = "This is an application error, please contact system administrator";
         return handleExceptionInternal(ex, bodyOfResponse,
