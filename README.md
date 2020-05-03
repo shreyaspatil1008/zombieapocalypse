@@ -58,7 +58,7 @@ the final position of the zombies
 
 
 # Solution
-This repository contails solution to above problem.
+This repository contains solution to above problem.
 
 To build the application and run unit tests run command ``mvn clean install``
 
