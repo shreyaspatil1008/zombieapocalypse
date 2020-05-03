@@ -69,3 +69,10 @@ To access the swagger page to simulate and check api visit [http://localhost:808
 For authentication Basic Auth is configured:
     ``username: ailo``
     ``password: password``
+
+
+### Assumptions:
+
+1. The input to the RestController is an Input object and the caller's responsibility to provide input in InputRequest format only.
+2. Conversion of one input format (json, txt, xml) is out of scope of this problem.
+3. As the problem statement does not contain sample input files, the conversion of the input from file to specified object is for future scope once we will have clarity of the file formats.
