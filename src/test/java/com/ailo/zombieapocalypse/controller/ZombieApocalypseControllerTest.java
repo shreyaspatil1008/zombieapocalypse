@@ -2,8 +2,8 @@ package com.ailo.zombieapocalypse.controller;
 
 
 import com.ailo.zombieapocalypse.model.InputRequest;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class ZombieApocalypseControllerTest extends AbstractTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
     }
