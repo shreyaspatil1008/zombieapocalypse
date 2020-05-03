@@ -4,30 +4,30 @@ import com.shreyas.zombieapocalypse.model.Movement;
 import com.shreyas.zombieapocalypse.model.Position;
 
 public enum Direction implements Movement {
-    L("LEFT"){
+    U("UP") {
         @Override
-        public Position move(Position position, Integer dimension){
-            int newYCoordinate = (position.getYCoordinate() == 0) ? dimension-1 : position.getYCoordinate() - 1;
+        public Position move(Position position, Integer dimension) {
+            int newYCoordinate = (position.getYCoordinate() == 0) ? dimension - 1 : position.getYCoordinate() - 1;
             return new Position(position.getXCoordinate(), newYCoordinate);
         }
     },
-    R("RIGHT"){
+    D("DOWN") {
         @Override
-        public Position move(Position position, Integer dimension){
+        public Position move(Position position, Integer dimension) {
             int newYCoordinate = position.getYCoordinate() + 1 == dimension ? 0 : position.getYCoordinate() + 1;
             return new Position(position.getXCoordinate(), newYCoordinate);
         }
     },
-    U("UP"){
+    L("LEFT") {
         @Override
-        public Position move(Position position, Integer dimension){
-            int newXCoordinate = (position.getXCoordinate() == 0) ? (dimension-1) : position.getXCoordinate() - 1;
+        public Position move(Position position, Integer dimension) {
+            int newXCoordinate = (position.getXCoordinate() == 0) ? (dimension - 1) : position.getXCoordinate() - 1;
             return new Position(newXCoordinate, position.getYCoordinate());
         }
     },
-    D("DOWN"){
+    R("RIGHT") {
         @Override
-        public Position move(Position position, Integer dimension){
+        public Position move(Position position, Integer dimension) {
             int newXCoordinate = position.getXCoordinate() + 1 == dimension ? 0 : position.getXCoordinate() + 1;
             return new Position(newXCoordinate, position.getYCoordinate());
         }

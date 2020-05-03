@@ -15,14 +15,14 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${user.name}")
+    @Value("${application.user.name}")
     private String userName;
 
-    @Value("${user.role}")
+    @Value("${application.user.role}")
     private String userRole;
 
-    @Value("${user.password}")
-    private String userHashedPassword;
+    @Value("${application.user.password}")
+    private String userPassword;
 
     @Autowired
     private AuthenticationEntryPoint authenticationEntryPoint;
@@ -38,7 +38,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser(userName)
-                .password(userHashedPassword)
+                .password(userPassword)
                 .roles(userRole);
     }
 
