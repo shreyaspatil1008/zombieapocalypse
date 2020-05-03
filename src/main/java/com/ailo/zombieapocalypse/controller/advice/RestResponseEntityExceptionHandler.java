@@ -23,9 +23,11 @@ public class RestResponseEntityExceptionHandler
                                                                   HttpStatus status,
                                                                   WebRequest request) {
         Map<String, String> errors = new HashMap<>();
+        logger.error("Validation failure with error/s: ");
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
+            logger.error("fieldName: " + fieldName + " , errorMessage: " + errorMessage);
             errors.put(fieldName, errorMessage);
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
@@ -34,8 +36,9 @@ public class RestResponseEntityExceptionHandler
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
 
-        logger.error(ex);
+        logger.error("Application failed with exception: " + ex.getStackTrace());
         String bodyOfResponse = "This is an application error, please contact system administrator";
+        logger.error("Beautified response: " + bodyOfResponse);
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
