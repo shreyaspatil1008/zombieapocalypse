@@ -18,19 +18,19 @@ grid. It is given an initial x-y coordinate and a list of movements, up, down, l
 
 ### Rules: 
 
-If a zombie moves so that it end up on the same location as a creature, the creature is
+1. If a zombie moves so that it end up on the same location as a creature, the creature is
 transformed into another zombie and zombies score one point. 
 
-The zombie continues moving and infecting creatures until has performed all its moves.
+2. The zombie continues moving and infecting creatures until has performed all its moves.
 
-Once it has completed its movement, the first newly created zombie moves using the same
+3. Once it has completed its movement, the first newly created zombie moves using the same
 sequence as the original zombie. 
 
-Once it has completed its move, the second newly created
+4. Once it has completed its move, the second newly created
 zombie moves, and so in order of infection with each zombie performing the same sequence
 of moves. 
 
-Once no new zombies have been created and all the zombies have completed
+5. Once no new zombies have been created and all the zombies have completed
 moving the program ends.
 
 
@@ -40,20 +40,16 @@ Your task is to write a program that takes input that describes the following pa
 
 #### Input
 
-dimensions of the area (N)
-
-the initial position of the zombie
-
-a list of positions of poor creatures
-
-and a list of moves zombies will make to produce an output that shows:
+1. Dimensions of the area (N)
+2. The initial position of the zombie
+3. A list of positions of poor creatures
+4. A list of moves zombies will make to produce an output that shows:
 
 
 #### Output: 
 
-the number of points scored by the zombies
-
-the final position of the zombies
+1. The number of points scored by the zombies
+2. The final position of the zombies
 
 
 
@@ -74,5 +70,7 @@ For authentication Basic Auth is configured:
 ### Assumptions:
 
 1. The input to the RestController is an Input object and the caller's responsibility to provide input in InputRequest format only.
+
 2. Conversion of one input format (json, txt, xml) is out of scope of this problem.
+
 3. As the problem statement does not contain sample input files, the conversion of the input from file to specified object is for future scope once we will have clarity of the file formats.
